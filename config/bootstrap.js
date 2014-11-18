@@ -26,19 +26,7 @@ module.exports.bootstrap = function(cb) {
     {
       name: "Atmopshere",
       status: "Unknown",
-      url: "https://status.io/pages/544e810996cc7fe45400896c",
-      api: "https://status.io/1.0/status/544e810996cc7fe45400896c"
-    },
-    {
-      name: "Discovery Environment",
-      status: "Unknown",
-      url: "https://status.io/pages/544e810996cc7fe45400896c",
-      api: "https://status.io/1.0/status/544e810996cc7fe45400896c"
-    },
-    {
-      name: "Data Store",
-      status: "Unknown",
-      url: "https://status.io/pages/544e810996cc7fe45400896c",
+      url: "https://atmosphere.status.io",
       api: "https://status.io/1.0/status/544e810996cc7fe45400896c"
     }
   ];

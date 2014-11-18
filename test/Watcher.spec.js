@@ -16,18 +16,13 @@ describe("Watcher", function(){
     it("should not throw an error", function(){
       var testWrapper = function(){
         var uow = {};
-        var serviceCheckerFactory = {};
-        return new Watcher(uow, serviceCheckerFactory);
+        var statusChecker = {};
+        var statusReporter = {};
+        return new Watcher(uow, statusChecker, statusReporter);
       };
       expect(testWrapper).to.not.throw(Error);
     });
 
   });
-
-  describe("#watch", function(){
-
-    it("should ")
-
-  })
 
 });

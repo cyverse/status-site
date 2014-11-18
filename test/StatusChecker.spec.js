@@ -69,10 +69,10 @@ describe("StatusChecker", function(){
       var mockHttpClient = sinon.mock(httpClient),
           statusChecker = new StatusChecker(httpClient);
 
-      mockHttpClient.expects("get").callsArgWith(1, httpClientResponse);
+      mockHttpClient.expects("get").callsArgWith(1, null, httpClientResponse);
 
       // Act
-      statusChecker.check(urlToCheck, function(status){
+      statusChecker.check(urlToCheck, function(err, status){
         // Assert
         var expectedResponse = httpClientResponse.result.status[0].containers[0].status;
         expect(status).to.equal(expectedResponse);
