@@ -22,45 +22,41 @@ module.exports.bootstrap = function(cb) {
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
 
-  var serviceStatus = {
-    name: "Atmopshere",
-    status: "Unknown",
-    url: "https://status.io/pages/544e810996cc7fe45400896c",
-    api: "https://status.io/1.0/status/544e810996cc7fe45400896c"
-  };
+  var serviceStatusList = [
+    {
+      name: "Atmopshere",
+      status: "Unknown",
+      url: "https://status.io/pages/544e810996cc7fe45400896c",
+      api: "https://status.io/1.0/status/544e810996cc7fe45400896c"
+    },
+    {
+      name: "Discovery Environment",
+      status: "Unknown",
+      url: "https://status.io/pages/544e810996cc7fe45400896c",
+      api: "https://status.io/1.0/status/544e810996cc7fe45400896c"
+    },
+    {
+      name: "Data Store",
+      status: "Unknown",
+      url: "https://status.io/pages/544e810996cc7fe45400896c",
+      api: "https://status.io/1.0/status/544e810996cc7fe45400896c"
+    }
+  ];
 
-  var url = serviceStatus.api;
   var httpClient = new HttpClient();
-
   var uow = new UnitOfWork(ServiceStatus);
   var statusReporter = new StatusReporter(uow);
   var statusChecker = new StatusChecker(httpClient);
 
-  ServiceStatus.create(serviceStatus).exec(function(err, created){
+  ServiceStatus.create(serviceStatusList).exec(function(err, created){
     if(err) throw err;
 
-    var watcher = new Watcher(uow, statusChecker, statusReporter);
-    watcher.watch(created);
+    created.forEach(function(serviceStatus){
+      var watcher = new Watcher(uow, statusChecker, statusReporter);
+      watcher.watch(serviceStatus);
+    });
   });
 
   cb();
-
-  //httpClient.get(url, function(err, response){
-  //  console.log(response);
-  //});
-
-
-  //var statusCheckerFactory = new StatusCheckerFactory();
-
-  //request({
-  //  url: "https://status.io/1.0/status/544e810996cc7fe45400896c",
-  //  method: "GET"
-  //}, function(error, response, body){
-  //  console.log(response);
-  //  console.log(body);
-  //});
-
-  //var watcher = new Watcher(uow, statusCheckerFactory);
-  //watcher.watch();
 
 };
