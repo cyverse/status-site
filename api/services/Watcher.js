@@ -1,4 +1,5 @@
 var Promise = require('bluebird');
+var pollingInterval = 1*60*1000; // poll every minute
 
 var Watcher = function(uow, statusChecker, statusReporter){
   if(!uow) throw new TypeError("uow");
@@ -35,7 +36,7 @@ Watcher.prototype._report = function(id, status){
 Watcher.prototype._waitUntilNextCheck = function(service){
   setTimeout(function(){
     this.watch(service);
-  }.bind(this), 1000);
+  }.bind(this), pollingInterval);
 };
 
 Watcher.prototype.watch = function(service, cb){
