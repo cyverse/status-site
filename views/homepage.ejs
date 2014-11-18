@@ -37,18 +37,20 @@
   <!-- Status list -->
   <div id="statusio_components" class="page_section">
 
-    <div style="border-left: 1px solid #c9c9c9; border-right: 1px solid #c9c9c9; border-bottom: 1px solid #c9c9c9; border-top: 1px solid #c9c9c9;" class="component component_middle status_td">
-      <div class="row">
-        <div class="col-md-8 col-sm-8 col-xs-8">
-          <p class="component_name">
-            <a href="#">API</a>
-          </p>
-        </div>
-        <div class="col-md-4 col-sm-4 col-xs-4">
-          <p style="color: #27AE60;" class="pull-right component-status">Operational</p>
+    <% for(var i = 0; i < statusResults.length; i++){ %>
+      <div style="border-left: 1px solid #c9c9c9; border-right: 1px solid #c9c9c9; border-bottom: 1px solid #c9c9c9; border-top: 1px solid #c9c9c9;" class="component component_middle status_td">
+        <div class="row">
+          <div class="col-md-8 col-sm-8 col-xs-8">
+            <p class="component_name">
+              <a href="<%= statusResults[i].url %>" target="_blank"><%= statusResults[i].name %></a>
+            </p>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p style="color: #27AE60;" class="pull-right component-status"><%= statusResults[i].status %></p>
+          </div>
         </div>
       </div>
-    </div>
+    <% } %>
 
   </div>
 </div>

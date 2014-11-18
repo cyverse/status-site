@@ -8,7 +8,9 @@
 module.exports = {
 
   index: function(req, res){
-    res.view("homepage");
+    ServiceStatus.find().exec(function(err, results){
+      res.view("homepage", {statusResults: results});
+    })
   }
 
 };
