@@ -33,5 +33,9 @@
     "url": "git://github.com/jason/status-site.git"
   },
   "author": "jason",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "sinon": "^1.12.1"
+  }
 }
