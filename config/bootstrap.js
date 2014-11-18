@@ -9,12 +9,12 @@
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.bootstrap.html
  */
 
-var UnitOfWork = require('api/services/UnitOfWork');
-var StatusChecker = require('api/services/StatusChecker');
+var UnitOfWork = require('../api/services/UnitOfWork');
+var StatusChecker = require('../api/services/StatusChecker');
 //var StatusCheckerFactory = require('api/services/ServiceStatusFactory');
-var Watcher = require('api/services/Watcher');
-var HttpClient = require('api/services/HttpClient');
-var StatusReporter = require('api/services/StatusReporter');
+var Watcher = require('../api/services/Watcher');
+var HttpClient = require('../api/services/HttpClient');
+var StatusReporter = require('../api/services/StatusReporter');
 //var request = require('request');
 
 module.exports.bootstrap = function(cb) {
