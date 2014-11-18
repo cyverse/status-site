@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 var sinon = require("sinon");
-var StatusChecker = require("api/services/StatusChecker");
+var StatusChecker = require("../api/services/StatusChecker");
 var httpClientResponse = require("./fixtures/httpClientResponse.fixture");
 
 describe("StatusChecker", function(){

@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 var sinon = require("sinon");
-var Watcher = require("api/services/Watcher");
+var Watcher = require("../api/services/Watcher");
 
 describe("Watcher", function(){
 
