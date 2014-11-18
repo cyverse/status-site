@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 var sinon = require("sinon");
 var Watcher = require("api/services/Watcher");
 
-describe.only("Watcher", function(){
+describe("Watcher", function(){
 
   describe("constructor", function(){
 
