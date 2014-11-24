@@ -46,7 +46,20 @@
             </p>
           </div>
           <div class="col-md-4 col-sm-4 col-xs-4">
-            <p style="color: #27AE60;" class="pull-right component-status"><%= statusResults[i].status %></p>
+
+              <% if (statusResults[i].status === "Operational"){ %>
+
+                <p style="color: #27AE60;" class="pull-right component-status"><%= statusResults[i].status %></p>
+              <% }else if ( statusResults[i].status ==="Degraded Performance" || statusResults[i].status ==="Partial Service Disruption") {%>
+              <p style="color: #FFA837;" class="pull-right component-status"><%= statusResults[i].status %></p>
+
+              <%} else if(statusResults[i].status === "Service Disruption" || statusResults[i].status === "Security Issue"){%>
+
+              <p style="color: #C44031;" class="pull-right component-status"><%= statusResults[i].status %></p>
+              <% }%>
+
+
+
           </div>
         </div>
       </div>

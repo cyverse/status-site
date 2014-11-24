@@ -19,27 +19,29 @@ var StatusReporter = require('../api/services/StatusReporter');
 
 module.exports.bootstrap = function(cb) {
 
-  // It's very important to trigger this callback method when you are finished
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
 
-  var serviceStatusList = [
+  var serviceStatusList = [ //(rollup) Database with one service
     {
       name: "Atmopshere",
       status: "Unknown",
       url: "https://atmosphere.status.io",
-      api: "https://status.io/1.0/status/544e810996cc7fe45400896c"
-    }
+      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
+      serviceid: "", // TODO
+      containerid: "" //TODO
+    } // Each entry has IDs for everything
+      // both IDs have to match to get data TODO
   ];
 
   var httpClient = new HttpClient();
   var uow = new UnitOfWork(ServiceStatus);
   var statusReporter = new StatusReporter(uow);
-  var statusChecker = new StatusChecker(httpClient);
+  var statusChecker = new StatusChecker(httpClient); // should take service, not URL TODO
+    // What does a service look like? ID or Service Object? pulled from DB? TODO
 
   ServiceStatus.create(serviceStatusList).exec(function(err, created){
-    if(err) throw err;
+    if(err) throw err; // db object
 
-    created.forEach(function(serviceStatus){
+    created.forEach(function(serviceStatus){ // for each DB entry, monitor its status
       var watcher = new Watcher(uow, statusChecker, statusReporter);
       watcher.watch(serviceStatus);
     });
@@ -47,4 +49,6 @@ module.exports.bootstrap = function(cb) {
 
   cb();
 
+    // It's very important to trigger this callback method when you are finished
+    // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
 };

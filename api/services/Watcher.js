@@ -1,5 +1,5 @@
 var Promise = require('bluebird');
-var pollingInterval = 1*60*1000; // poll every minute
+var pollingInterval = 1*1*1000; // poll every minute
 
 var Watcher = function(uow, statusChecker, statusReporter){
   if(!uow) throw new TypeError("uow");
