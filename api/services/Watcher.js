@@ -1,5 +1,7 @@
 var Promise = require('bluebird');
 var pollingInterval = 1*1*1000; // poll every minute
+//var pollingInterval = 1*1*1000; // poll every minute
+//TODO but does this really poll every minute?
 
 var Watcher = function(uow, statusChecker, statusReporter){
   if(!uow) throw new TypeError("uow");
@@ -11,7 +13,8 @@ var Watcher = function(uow, statusChecker, statusReporter){
   this.statusReporter = statusReporter;
 };
 
-Watcher.prototype._check = function(url){
+
+Watcher.prototype._check = function(url){ // again, service instead of url
   var statusChecker = this.statusChecker;
 
   return new Promise(function(resolve, reject){

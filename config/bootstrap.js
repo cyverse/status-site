@@ -16,24 +16,37 @@ var Watcher = require('../api/services/Watcher');
 var HttpClient = require('../api/services/HttpClient');
 var StatusReporter = require('../api/services/StatusReporter');
 //var request = require('request');
+//var Service = require('../api/services/Service');
 
 module.exports.bootstrap = function(cb) {
 
 
   var serviceStatusList = [ //(rollup) Database with one service
-    {
+    { // Does this represent Atmo/DE or Auth-API-WebApp?
       name: "Atmopshere",
       status: "Unknown",
       url: "https://atmosphere.status.io",
       api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
-      serviceid: "", // TODO
-      containerid: "" //TODO
+      serviceid: "", // This might not be a real thing TODO Which one is this??
+      containerid: "544e810a96cc7fe45400897a" //This corresponds to Tucson TODO
     } // Each entry has IDs for everything
-      // both IDs have to match to get data TODO
+      // > Status
+      //    > service1 (serviceid)
+      //        > container (containerid, same for each)
+      // TODO both IDs have to match to get data
   ];
+  // populate initial values for serviceid and status
+    // Pull from a request?
 
-  var httpClient = new HttpClient();
-  var uow = new UnitOfWork(ServiceStatus);
+  //Instead of hardcoding, create initial request
+
+
+  var httpClient = new HttpClient(); // The thing that does all the ajax requests
+
+  //var service = new Service();
+      //service.setName("Atmosphere");
+
+  var uow = new UnitOfWork(ServiceStatus); // A single DB request
   var statusReporter = new StatusReporter(uow);
   var statusChecker = new StatusChecker(httpClient); // should take service, not URL TODO
     // What does a service look like? ID or Service Object? pulled from DB? TODO
