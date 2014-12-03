@@ -14,7 +14,7 @@ var Watcher = function(uow, statusChecker, statusReporter){
 };
 
 
-Watcher.prototype._check = function(url){ // again, service instead of url
+Watcher.prototype._check = function(url){
   var statusChecker = this.statusChecker;
 
   return new Promise(function(resolve, reject){
