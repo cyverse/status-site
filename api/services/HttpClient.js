@@ -10,6 +10,7 @@ HttpClient.prototype.get = function(url, cb){
     method: "GET"
   }, function (error, response, body) {
     if(error) return cb(error);
+      //console.log(body);
     var bodyJSON = JSON.parse(body);
     return cb(null, bodyJSON);
   });

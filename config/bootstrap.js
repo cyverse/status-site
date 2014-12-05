@@ -22,13 +22,13 @@ module.exports.bootstrap = function(cb) {
 
 
   var serviceStatusList = [ //(rollup) Database with one service
-    { // Does this represent Atmo/DE or Auth-API-WebApp?
-      name: "Atmopshere",
+    { // THIS IS THE API
+      name: "Atmopshere API",
       status: "Unknown",
       url: "https://atmosphere.status.io",
       api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
-      serviceid: "", // This might not be a real thing TODO Which one is this??
-      containerid: "544e810a96cc7fe45400897a" //This corresponds to Tucson TODO
+      serviceid: "544ebe8296cc7fe454008e58", // This might not be a real thing TODO Which one is this?? API
+      containerid: "544e810a96cc7fe45400897a"
     } // Each entry has IDs for everything
       // > Status
       //    > service1 (serviceid)
@@ -56,7 +56,7 @@ module.exports.bootstrap = function(cb) {
 
     created.forEach(function(serviceStatus){ // for each DB entry, monitor its status
       var watcher = new Watcher(uow, statusChecker, statusReporter);
-      watcher.watch(serviceStatus);
+      watcher.watch(serviceStatus);// a database object
     });
   });
 

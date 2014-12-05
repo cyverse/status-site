@@ -14,15 +14,27 @@ var Watcher = function(uow, statusChecker, statusReporter){
 };
 
 
-Watcher.prototype._check = function(url){
-  var statusChecker = this.statusChecker;
+//Watcher.prototype._check = function(url){
+//  var statusChecker = this.statusChecker;
+//
+//  return new Promise(function(resolve, reject){
+//    statusChecker.check(url, function(err, status){
+//      if(err) return reject(err);
+//      resolve(status);
+//    });
+//  })
+//};
 
-  return new Promise(function(resolve, reject){
-    statusChecker.check(url, function(err, status){
-      if(err) return reject(err);
-      resolve(status);
-    });
-  })
+//TODO
+Watcher.prototype._check = function(service){
+    var statusChecker = this.statusChecker;
+
+    return new Promise(function(resolve, reject){
+        statusChecker.check(service, function(err, status){
+            if(err) return reject(err);
+            resolve(status);
+        });
+    })
 };
 
 Watcher.prototype._report = function(id, status){
@@ -47,7 +59,7 @@ Watcher.prototype.watch = function(service, cb){
       statusReporter = this.statusReporter,
       that = this;
 
-  this._check(service.api)
+  this._check(service)
       .then(function(status){
         that._report(service.id, status)
       })
