@@ -1,5 +1,5 @@
 var Promise = require('bluebird');
-var pollingInterval = 1*10*1000; // poll every minute
+var pollingInterval = 1*60*1000; // poll every minute
 //var pollingInterval = 1*1*1000; // poll every minute
 //TODO but does this really poll every minute?
 
