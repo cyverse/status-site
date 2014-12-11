@@ -48,28 +48,47 @@ module.exports.bootstrap = function(cb) {
     {
       name: "Atmopshere API",
       status: "Unknown",
-      url: "https://atmosphere.status.io",
+      //url: "https://atmosphere.status.io",
       api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
       serviceid: "544ebe8296cc7fe454008e58", // This might not be a real thing TODO Which one is this?? API
       containerid: "544e810a96cc7fe45400897a"
     }// Each entry has IDs for everything
 ];
 
-  var httpClient = new HttpClient(); // The thing that does all the ajax requests
-
-  //var service = new Service();
-      //service.setName("Atmosphere");
-
+  var httpClient = new HttpClient(); // The thing that does all the  requests
   var uow = new UnitOfWork(ServiceStatus); // A single DB request
   var statusReporter = new StatusReporter(uow);
-  var statusChecker = new StatusChecker(httpClient); // should take service, not URL TODO
-    // What does a service look like? ID or Service Object? pulled from DB? TODO
+  var statusChecker = new StatusChecker(httpClient);
 
+    //Create Groups
+    //if group exist, don't make
+    var atmoid;
+
+    Group.findOne({name: 'Atmosphere'}).exec(function(err, serviceStatus) {
+        if(serviceStatus){
+            //save it's ID for population
+            atmoid = serviceStatus.id;
+        }
+        else{
+            Group.create({name:'Atmosphere', url:"https://atmosphere.status.io"}).exec(function(err, created){
+                if(err) throw err;
+                atmoid = created.id;
+            });
+        }
+    });
+
+//
   serviceStatusList.forEach(function(serviceStatusData){
+      serviceStatusData.group = atmoid;
       addServiceStatusIfNew(serviceStatusData, uow, statusChecker, statusReporter)
   });
 
-  cb();
+    //Populate
+//TODO wont work asynchronously
+
+    Group.find(atmoid).populate('services').exec(function(err,r){});
+
+    cb();
 
     // It's very important to trigger this callback method when you are finished
     // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
