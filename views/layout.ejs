@@ -20,14 +20,27 @@
     <link rel="stylesheet" href="//s3.amazonaws.com/statusio-static/public/statuspage/css/statuspage-200.min.css?v=3">
 
     <style>
+    .container{
+        max-width: 950px;
+    }
+
+    .panel-body p{
+        font-size: 17px;
+    }
+
       .brand img {
         display: block !important;
       }
+
+    .panel-body {
+        padding: 10px;
+    }
 
       .img {
         max-width: 100% height : auto;
         vertical-align: middle;
         border: 0;
+
       }
 
       .navbar .brand {
@@ -87,7 +100,7 @@
       }
 
       a:hover {
-        color: #363434;
+        color: #53618C;
         text-decoration: none;
         background-color: transparent;
       }
@@ -122,6 +135,11 @@
       .status_td {
         color: #363434;
         background-color: #ffffff;
+        padding: 10px;
+      }
+
+      .status_td h3{
+          border-bottom: 1px solid #4D4E4F;
       }
 
       .external_service {

@@ -1,35 +1,36 @@
 <div class="container">
 
-  <!-- Header image-->
-  <div id="statusio_header" class="header">
-    <div id="statusio_header_image" style="margin-bottom: 25px;" class="row">
-      <div class="col-md-12">
-        <a href="https://atmo.iplantcollaborative.org">
-          <img src="//s3.amazonaws.com/statusio-img/TSEFNDTgIWAM.jpg" alt="Header Image" style="max-width: 100%; height: auto;">
-        </a>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Status summary -->
-  <div id="statusio_status_bar" class="panel panel-default top_bar make_round">
-    <div style="vertical-align: middle;" class="panel-body">
-      <div class="row">
-        <div class="col-md-8 col-sm-6 col-xs-12">
-          <strong id="statusbar_text">All Systems Operational</strong>
-        </div>
-        <div class="col-md-4 col-sm-6 hidden-xs">
-          <p id="updated_ago" class="pull-right white">Updated a few seconds ago</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!--<div id="statusio_status_bar" class="panel panel-default top_bar make_round">-->
+    <!--<div style="vertical-align: middle;" class="panel-body">-->
+      <!--<div class="row">-->
+        <!--<div class="col-md-8 col-sm-6 col-xs-12">-->
+          <!--<strong id="statusbar_text">All Systems Operational</strong>-->
+        <!--</div>-->
+        <!--<div class="col-md-4 col-sm-6 hidden-xs">-->
+          <!--<p id="updated_ago" class="pull-right white">Updated a few seconds ago</p>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
 
   <!-- Description -->
   <div id="statusio_about_text" class="page_section">
     <div class="panel panel-default section_border_1 make_round">
+        <!-- Header image-->
+        <div id="statusio_header" class="header">
+            <div id="statusio_header_image" style="margin-bottom: 25px;" class="row">
+                <div class="col-md-12">
+                    <a href="https://atmo.iplantcollaborative.org">
+                        <img src="//s3.amazonaws.com/statusio-img/TSEFNDTgIWAM.jpg" alt="Header Image" style="max-width: 98%; height: auto; margin: 1% 1%;">
+                    </a>
+                </div>
+            </div>
+        </div>
       <div class="panel-body">
-        <h5 style="opacity: 0.9;" class="text-center">The iPlant Collaborative is where scientists in all domains of life sciences can connect to public datasets, manage and store their own data and experiments, access high-performance computing, and share results with colleagues.</h5>
+        <p style="opacity: 0.9;" class="text-center">The iPlant Collaborative is where scientists in all domains of life sciences can connect to public datasets, manage and store their own data and experiments, access high-performance computing, and share results with colleagues.</p>
       </div>
     </div>
   </div>
@@ -37,33 +38,37 @@
   <!-- Status list -->
   <div id="statusio_components" class="page_section">
 
-    <% for(var i = 0; i < statusResults.length; i++){ %>
-      <div style="border-left: 1px solid #c9c9c9; border-right: 1px solid #c9c9c9; border-bottom: 1px solid #c9c9c9; border-top: 1px solid #c9c9c9;" class="component component_middle status_td">
-        <div class="row">
-          <div class="col-md-8 col-sm-8 col-xs-8">
-            <p class="component_name">
-              <a href="<%= statusResults[i].url %>" target="_blank"><%= statusResults[i].name %></a>
-            </p>
+
+          <div style="border-left: 1px solid #c9c9c9; border-right: 1px solid #c9c9c9; border-bottom: 1px solid #c9c9c9; border-top: 1px solid #c9c9c9;" class="component component_middle status_td">
+              <h3>Atmosphere</h3>
+
+              <% for(var i = 0; i < statusResults.length; i++){ %>
+              <% if (statusResults[i].name.indexOf("Atmosphere" !== 0)){%>
+
+              <div class="row">
+
+                  <div class="col-md-8 col-sm-8 col-xs-8">
+                      <p class="component_name">
+                          <a href="<%= statusResults[i].url %>" target="_blank"><%= statusResults[i].name %></a>
+                      </p>
+                  </div>
+                  <div class="col-md-4 col-sm-4 col-xs-4">
+
+                      <% if (statusResults[i].status === "Operational"){ %>
+
+                      <p style="color: #27AE60;" class="pull-right component-status"><%= statusResults[i].status %></p>
+                      <% }else if ( statusResults[i].status ==="Degraded Performance" || statusResults[i].status ==="Partial Service Disruption") {%>
+                      <p style="color: #FFA837;" class="pull-right component-status"><%= statusResults[i].status %></p>
+
+                      <%} else if(statusResults[i].status === "Service Disruption" || statusResults[i].status === "Security Issue"){%>
+
+                      <p style="color: #C44031;" class="pull-right component-status"><%= statusResults[i].status %></p>
+                      <% }%>
+                  </div>
+              </div>
           </div>
-          <div class="col-md-4 col-sm-4 col-xs-4">
-
-              <% if (statusResults[i].status === "Operational"){ %>
-
-                <p style="color: #27AE60;" class="pull-right component-status"><%= statusResults[i].status %></p>
-              <% }else if ( statusResults[i].status ==="Degraded Performance" || statusResults[i].status ==="Partial Service Disruption") {%>
-              <p style="color: #FFA837;" class="pull-right component-status"><%= statusResults[i].status %></p>
-
-              <%} else if(statusResults[i].status === "Service Disruption" || statusResults[i].status === "Security Issue"){%>
-
-              <p style="color: #C44031;" class="pull-right component-status"><%= statusResults[i].status %></p>
-              <% }%>
-
-
-
-          </div>
-        </div>
-      </div>
-    <% } %>
+        <% } %>
+      <% } %>
 
   </div>
 </div>
