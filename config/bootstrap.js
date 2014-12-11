@@ -32,6 +32,11 @@ function addServiceStatusIfNew(serviceStatusData, uow, statusChecker, statusRepo
                 watcher.watch(serviceStatus);// a database object
             });
         }
+        else{
+            var watcher = new Watcher(uow, statusChecker, statusReporter);
+            watcher.watch(serviceStatus);// a database object
+        }
+
 
     });
 }
