@@ -22,24 +22,15 @@ module.exports.bootstrap = function(cb) {
 
 
   var serviceStatusList = [ //(rollup) Database with one service
-    { // THIS IS THE API
+    {
       name: "Atmopshere API",
       status: "Unknown",
       url: "https://atmosphere.status.io",
       api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
       serviceid: "544ebe8296cc7fe454008e58", // This might not be a real thing TODO Which one is this?? API
       containerid: "544e810a96cc7fe45400897a"
-    } // Each entry has IDs for everything
-      // > Status
-      //    > service1 (serviceid)
-      //        > container (containerid, same for each)
-      // TODO both IDs have to match to get data
-  ];
-  // populate initial values for serviceid and status
-    // Pull from a request?
-
-  //Instead of hardcoding, create initial request
-
+    }// Each entry has IDs for everything
+];
 
   var httpClient = new HttpClient(); // The thing that does all the ajax requests
 
@@ -51,14 +42,21 @@ module.exports.bootstrap = function(cb) {
   var statusChecker = new StatusChecker(httpClient); // should take service, not URL TODO
     // What does a service look like? ID or Service Object? pulled from DB? TODO
 
-  ServiceStatus.create(serviceStatusList).exec(function(err, created){
-    if(err) throw err; // db object
+    ServiceStatus.findOne({name: serviceStatusList.name }).exec(function(err, serviceStatus) {
 
-    created.forEach(function(serviceStatus){ // for each DB entry, monitor its status
-      var watcher = new Watcher(uow, statusChecker, statusReporter);
-      watcher.watch(serviceStatus);// a database object
+        if (!serviceStatus){
+
+            ServiceStatus.create(serviceStatusList).exec(function (err, created) {
+                if (err) throw err; // db object
+
+                created.forEach(function (serviceStatus) { // for each DB entry, monitor its status
+                    var watcher = new Watcher(uow, statusChecker, statusReporter);
+                    watcher.watch(serviceStatus);// a database object
+                });
+            });
+        }
+
     });
-  });
 
   cb();
 
