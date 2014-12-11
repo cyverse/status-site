@@ -18,6 +18,24 @@ var StatusReporter = require('../api/services/StatusReporter');
 //var request = require('request');
 //var Service = require('../api/services/Service');
 
+function addServiceStatusIfNew(serviceStatusData, uow, statusChecker, statusReporter){
+    ServiceStatus.findOne({name: serviceStatusData.name }).exec(function(err, serviceStatus) {
+        if(err) throw err;
+
+        if (!serviceStatus){
+
+            ServiceStatus.create(serviceStatusData).exec(function (err, serviceStatus) {
+                if (err) throw err; // db object
+
+                // for each DB entry, monitor its status
+                var watcher = new Watcher(uow, statusChecker, statusReporter);
+                watcher.watch(serviceStatus);// a database object
+            });
+        }
+
+    });
+}
+
 module.exports.bootstrap = function(cb) {
 
 
@@ -42,21 +60,9 @@ module.exports.bootstrap = function(cb) {
   var statusChecker = new StatusChecker(httpClient); // should take service, not URL TODO
     // What does a service look like? ID or Service Object? pulled from DB? TODO
 
-    ServiceStatus.findOne({name: serviceStatusList.name }).exec(function(err, serviceStatus) {
-
-        if (!serviceStatus){
-
-            ServiceStatus.create(serviceStatusList).exec(function (err, created) {
-                if (err) throw err; // db object
-
-                created.forEach(function (serviceStatus) { // for each DB entry, monitor its status
-                    var watcher = new Watcher(uow, statusChecker, statusReporter);
-                    watcher.watch(serviceStatus);// a database object
-                });
-            });
-        }
-
-    });
+  serviceStatusList.forEach(function(serviceStatusData){
+      addServiceStatusIfNew(serviceStatusData, uow, statusChecker, statusReporter)
+  });
 
   cb();
 
