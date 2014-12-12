@@ -133,7 +133,7 @@ module.exports.bootstrap = function(cb) {
   // ----------
 
   deGroup = {
-    name: "DE",
+    name: "Discovery Environment",
     url: "http://atmosphere.status.io"
   };
 
@@ -151,7 +151,7 @@ module.exports.bootstrap = function(cb) {
 
     setTimeout(function(){
         Group.find().populate("services").exec(function(err, groups){
-            console.log(groups);
+            //console.log(groups);
         })
     }, 2000);
 
