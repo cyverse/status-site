@@ -8,8 +8,10 @@
 module.exports = {
 
   index: function(req, res){
-    ServiceStatus.find().exec(function(err, results){
-      res.view("homepage", {statusResults: results});
+    Group.find().populate("services").exec(function(err, results){
+        console.log("Value of Results:");
+        console.log(results);
+      res.view("homepage", {Results: results});
     })
   }
 

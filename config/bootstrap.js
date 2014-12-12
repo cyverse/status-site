@@ -59,14 +59,14 @@ function addServicesToGroup(group, serviceDataList){
         ServiceStatus.create(serviceData).exec(function(err, service){
           if(err) throw err;
           // watch service
-          watchService(service[0]);
+          watchService(service);
         });
       }else{
         // update, then watch
         ServiceStatus.update(service.id, serviceData).exec(function(err, service){
           if(err) throw err;
           // watch service
-          watchService(service[0]);
+          watchService(service);
         });
       }
     });
@@ -81,14 +81,14 @@ function createGroupAndAddServices(groupData, servicesData){
       Group.create(groupData).exec(function(err, group){
         if(err) throw err;
         // add services to newly created group
-        addServicesToGroup(group[0], servicesData);
+        addServicesToGroup(group, servicesData);
       });
     } else {
       // group already exists so just add services
       Group.update(group.id, groupData).exec(function(err, group){
         if(err) throw err;
         // add services to newly created group
-        addServicesToGroup(group[0], servicesData);
+        addServicesToGroup(group, servicesData);
       });
     }
   });
@@ -133,7 +133,7 @@ module.exports.bootstrap = function(cb) {
   // ----------
 
   deGroup = {
-    name: "Atmosphere",
+    name: "DE",
     url: "http://atmosphere.status.io"
   };
 
@@ -148,6 +148,12 @@ module.exports.bootstrap = function(cb) {
   ];
 
   createGroupAndAddServices(deGroup, deServices);
+
+    setTimeout(function(){
+        Group.find().populate("services").exec(function(err, groups){
+            console.log(groups);
+        })
+    }, 2000);
 
   // ------------------
   // Bootstrap Callback
