@@ -18,78 +18,144 @@ var StatusReporter = require('../api/services/StatusReporter');
 //var request = require('request');
 //var Service = require('../api/services/Service');
 
-function addServiceStatusIfNew(serviceStatusData, uow, statusChecker, statusReporter){
-    ServiceStatus.findOne({name: serviceStatusData.name }).exec(function(err, serviceStatus) {
-        if(err) throw err;
+// check for groups
+  // take group list and create if doesn't exist
 
-        if (!serviceStatus){
+// then: make services
+  // create service if not exists
 
-            ServiceStatus.create(serviceStatusData).exec(function (err, serviceStatus) {
-                if (err) throw err; // db object
+// then: populate groups
+  // add services to group if not in it
 
-                // for each DB entry, monitor its status
-                var watcher = new Watcher(uow, statusChecker, statusReporter);
-                watcher.watch(serviceStatus);// a database object
-            });
-        }
-        else{
-            var watcher = new Watcher(uow, statusChecker, statusReporter);
-            watcher.watch(serviceStatus);// a database object
-        }
+// then: done
 
 
-    });
-}
-
-module.exports.bootstrap = function(cb) {
-
-
-  var serviceStatusList = [ //(rollup) Database with one service
-    {
-      name: "Atmopshere API",
-      status: "Unknown",
-      //url: "https://atmosphere.status.io",
-      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
-      serviceid: "544ebe8296cc7fe454008e58", // This might not be a real thing TODO Which one is this?? API
-      containerid: "544e810a96cc7fe45400897a"
-    }// Each entry has IDs for everything
-];
-
+function watchService(service){
+  // create DI-esque objects
   var httpClient = new HttpClient(); // The thing that does all the  requests
   var uow = new UnitOfWork(ServiceStatus); // A single DB request
   var statusReporter = new StatusReporter(uow);
   var statusChecker = new StatusChecker(httpClient);
 
-    //Create Groups
-    //if group exist, don't make
-    var atmoid;
+  var watcher = new Watcher(uow, statusChecker, statusReporter);
+  watcher.watch(service);// a database object
+}
 
-    Group.findOne({name: 'Atmosphere'}).exec(function(err, serviceStatus) {
-        if(serviceStatus){
-            //save it's ID for population
-            atmoid = serviceStatus.id;
-        }
-        else{
-            Group.create({name:'Atmosphere', url:"https://atmosphere.status.io"}).exec(function(err, created){
-                if(err) throw err;
-                atmoid = created.id;
-            });
-        }
+function addServicesToGroup(group, serviceDataList){
+  serviceDataList.forEach(function(serviceData){
+    // find group
+    // create or update
+    var options = {
+      api: serviceData.api,
+      serviceid: serviceData.serviceid,
+      containerid: serviceData.containerid
+    };
+
+    ServiceStatus.findOne(options).exec(function(err, service) {
+      // set the group for the service
+      serviceData.group = group.id;
+
+      if(!service){
+        ServiceStatus.create(serviceData).exec(function(err, service){
+          if(err) throw err;
+          // watch service
+          watchService(service[0]);
+        });
+      }else{
+        // update, then watch
+        ServiceStatus.update(service.id, serviceData).exec(function(err, service){
+          if(err) throw err;
+          // watch service
+          watchService(service[0]);
+        });
+      }
     });
-
-//
-  serviceStatusList.forEach(function(serviceStatusData){
-      serviceStatusData.group = atmoid;
-      addServiceStatusIfNew(serviceStatusData, uow, statusChecker, statusReporter)
   });
+}
 
-    //Populate
-//TODO wont work asynchronously
+function createGroupAndAddServices(groupData, servicesData){
 
-    Group.find(atmoid).populate('services').exec(function(err,r){});
+  // 1. find group
+  Group.findOne({name: groupData.name}).exec(function(err, group) {
+    if(!group) {
+      Group.create(groupData).exec(function(err, group){
+        if(err) throw err;
+        // add services to newly created group
+        addServicesToGroup(group[0], servicesData);
+      });
+    } else {
+      // group already exists so just add services
+      Group.update(group.id, groupData).exec(function(err, group){
+        if(err) throw err;
+        // add services to newly created group
+        addServicesToGroup(group[0], servicesData);
+      });
+    }
+  });
+}
 
-    cb();
+module.exports.bootstrap = function(cb) {
+  var atmosphereGroup,
+      atmosphereServices,
+      deGroup,
+      deServices;
 
-    // It's very important to trigger this callback method when you are finished
-    // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
+  // ----------
+  // Atmosphere
+  // ----------
+
+  atmosphereGroup = {
+    name: "Atmosphere",
+    url: "http://atmosphere.status.io"
+  };
+
+  atmosphereServices = [
+    {
+      name: "API",
+      status: "Unknown",
+      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
+      serviceid: "544ebe8296cc7fe454008e58",
+      containerid: "544e810a96cc7fe45400897a"
+    },
+    {
+      name: "Web App",
+      status: "Unknown",
+      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
+      serviceid: "544e810a96cc7fe45400897b",
+      containerid: "544e810a96cc7fe45400897a"
+    }
+  ];
+
+  createGroupAndAddServices(atmosphereGroup, atmosphereServices);
+
+  // ----------
+  // Fake DE
+  // ----------
+
+  deGroup = {
+    name: "Atmosphere",
+    url: "http://atmosphere.status.io"
+  };
+
+  deServices = [
+    {
+      name: "API",
+      status: "Unknown",
+      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
+      serviceid: "544ebe8296cc7fe454008e58",
+      containerid: "544e810a96cc7fe45400897a"
+    }
+  ];
+
+  createGroupAndAddServices(deGroup, deServices);
+
+  // ------------------
+  // Bootstrap Callback
+  // ------------------
+
+  // It's very important to trigger this callback method when you are finished
+  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
+  cb();
+
+
 };
