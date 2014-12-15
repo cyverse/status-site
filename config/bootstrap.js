@@ -63,10 +63,10 @@ function addServicesToGroup(group, serviceDataList){
         });
       }else{
         // update, then watch
-        ServiceStatus.update(service.id, serviceData).exec(function(err, service){
+        ServiceStatus.update(service.id, serviceData).exec(function(err, services){
           if(err) throw err;
           // watch service
-          watchService(service);
+          watchService(services[0]);
         });
       }
     });
@@ -85,10 +85,10 @@ function createGroupAndAddServices(groupData, servicesData){
       });
     } else {
       // group already exists so just add services
-      Group.update(group.id, groupData).exec(function(err, group){
+      Group.update(group.id, groupData).exec(function(err, groups){
         if(err) throw err;
         // add services to newly created group
-        addServicesToGroup(group, servicesData);
+        addServicesToGroup(groups[0], servicesData);
       });
     }
   });
@@ -147,7 +147,7 @@ module.exports.bootstrap = function(cb) {
     }
   ];
 
-  createGroupAndAddServices(deGroup, deServices);
+  //createGroupAndAddServices(deGroup, deServices);
 
     setTimeout(function(){
         Group.find().populate("services").exec(function(err, groups){
