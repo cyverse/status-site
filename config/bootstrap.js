@@ -149,7 +149,7 @@ module.exports.bootstrap = function(cb) {
     }
   ];
 
-  //createGroupAndAddServices(deGroup, deServices);
+  createGroupAndAddServices(deGroup, deServices);
 
   // ----------
   // Data Store
@@ -183,7 +183,7 @@ module.exports.bootstrap = function(cb) {
       containerid: "54b6f6d8683bac79200003eb"
     }
   ];
-  //createGroupAndAddServices(coreGroup, coreServices);TODO
+  createGroupAndAddServices(coreGroup, coreServices);
 
 
   //-----------------
@@ -211,7 +211,7 @@ module.exports.bootstrap = function(cb) {
       containerid: "54b6f6d8683bac79200003eb"
     }
   ];
-//createGroupAndAddServices(deGroup, deServices);TODO
+  createGroupAndAddServices(authGroup, authServices);
 
 
 
