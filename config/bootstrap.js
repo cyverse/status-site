@@ -113,14 +113,14 @@ module.exports.bootstrap = function(cb) {
     {
       name: "API",
       status: "Unknown",
-      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
+      api: "https://api.status.io/1.0/status/544e810996cc7fe45400896c",
       serviceid: "544ebe8296cc7fe454008e58",
       containerid: "544e810a96cc7fe45400897a"
     },
     {
       name: "Web App",
       status: "Unknown",
-      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
+      api: "https://api.status.io/1.0/status/544e810996cc7fe45400896c",
       serviceid: "544e810a96cc7fe45400897b",
       containerid: "544e810a96cc7fe45400897a"
     }
@@ -128,26 +128,93 @@ module.exports.bootstrap = function(cb) {
 
   createGroupAndAddServices(atmosphereGroup, atmosphereServices);
 
+
+
   // ----------
-  // Fake DE
+  // DE
   // ----------
 
   deGroup = {
     name: "Discovery Environment",
-    url: "http://atmosphere.status.io"
+    url: "http://iplantde.status.io"
   };
 
   deServices = [
     {
       name: "API",
       status: "Unknown",
-      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
-      serviceid: "544ebe8296cc7fe454008e58",
-      containerid: "544e810a96cc7fe45400897a"
+      api: "https://api.status.io/1.0/status/54b6f25d22de98fe5e00028f",
+      serviceid: "",
+      containerid: ""
     }
   ];
 
   //createGroupAndAddServices(deGroup, deServices);
+
+  // ----------
+  // Data Store
+  // ----------
+
+  coreGroup = {
+    name: "Core Services",
+    url: "http://iplantcore.status.io"
+  };
+
+  coreServices = [
+    {
+      name: "Data Store",
+      status: "Unknown",
+      api: "https://api.status.io/1.0/status/54b6f6d8683bac79200003dc",
+      serviceid: "54b6f6d8683bac79200003ec",
+      containerid: "54b6f6d8683bac79200003eb"
+    },
+    {
+      name: "Bisque",
+      status: "Unknown",
+      api: "https://api.status.io/1.0/status/54b6f6d8683bac79200003dc",
+      serviceid: "54b6fdd3683bac7920000400",
+      containerid: "54b6f6d8683bac79200003eb"
+    },
+    {
+      name: "Main Website",
+      status: "Unknown",
+      api: "https://api.status.io/1.0/status/54b6f6d8683bac79200003dc",
+      serviceid: "54b6ff7f22de98fe5e0002b9",
+      containerid: "54b6f6d8683bac79200003eb"
+    }
+  ];
+  //createGroupAndAddServices(coreGroup, coreServices);TODO
+
+
+  //-----------------
+  //  Authentication
+  //-----------------
+
+  authGroup = {
+    name: "Authentication",
+    url: "http://atmosphere.status.io"
+  };
+
+  authServices = [
+    {
+      name: "CAS 3",
+      status: "Unknown",
+      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
+      serviceid: "54b9522322de98fe5e000384",
+      containerid: "54b6f6d8683bac79200003eb"
+    },
+    {
+      name: "CAS 4.0",
+      status: "Unknown",
+      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
+      serviceid: "54b9522e683bac79200004e4",
+      containerid: "54b6f6d8683bac79200003eb"
+    }
+  ];
+//createGroupAndAddServices(deGroup, deServices);TODO
+
+
+
 
     setTimeout(function(){
         Group.find().populate("services").exec(function(err, groups){
