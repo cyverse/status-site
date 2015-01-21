@@ -199,14 +199,14 @@ module.exports.bootstrap = function(cb) {
     {
       name: "CAS 3",
       status: "Unknown",
-      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
+      api: "https://status.io/1.0/status/54b6f6d8683bac79200003dc",
       serviceid: "54b9522322de98fe5e000384",
       containerid: "54b6f6d8683bac79200003eb"
     },
     {
       name: "CAS 4.0",
       status: "Unknown",
-      api: "https://status.io/1.0/status/544e810996cc7fe45400896c",
+      api: "https://status.io/1.0/status/54b6f6d8683bac79200003dc",
       serviceid: "54b9522e683bac79200004e4",
       containerid: "54b6f6d8683bac79200003eb"
     }
