@@ -141,11 +141,11 @@ module.exports.bootstrap = function(cb) {
 
   deServices = [
     {
-      name: "API",
+      name: "Website",
       status: "Unknown",
       api: "https://api.status.io/1.0/status/54b6f25d22de98fe5e00028f",
-      serviceid: "",
-      containerid: ""
+      serviceid: "54b6f25d22de98fe5e00029f",
+      containerid: "54b6f25d22de98fe5e00029e"
     }
   ];
 
@@ -192,7 +192,7 @@ module.exports.bootstrap = function(cb) {
 
   authGroup = {
     name: "Authentication",
-    url: "http://atmosphere.status.io"
+    url: "http://iplantcore.status.io"
   };
 
   authServices = [
