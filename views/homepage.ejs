@@ -25,7 +25,7 @@
       <% Results.forEach(function(group) { %>
 
           <div style="border-left: 1px solid #c9c9c9; border-right: 1px solid #c9c9c9; border-bottom: 1px solid #c9c9c9; border-top: 1px solid #c9c9c9;" class="component component_middle status_td">
-              <h3><a href="<%=  group.url %>" target="_blank"><%= group.name %></a></h3>
+              <h3><a href="<%=  group.url %>" target="_blank"><%= group.name %> <span class="glyphicon glyphicon-new-window"></span></a></h3>
 
               <% group.services.forEach(function(service){ %>
 
