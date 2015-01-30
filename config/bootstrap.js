@@ -128,8 +128,6 @@ module.exports.bootstrap = function(cb) {
 
   createGroupAndAddServices(atmosphereGroup, atmosphereServices);
 
-
-
   // ----------
   // DE
   // ----------
@@ -156,11 +154,18 @@ module.exports.bootstrap = function(cb) {
   // ----------
 
   coreGroup = {
-    name: "Core Services",
+    name: "Other Services",
     url: "http://iplantcore.status.io"
   };
 
   coreServices = [
+    {
+      name: "DNA Subway",
+      status: "Unknown",
+      api: "https://api.status.io/1.0/status/54b6f6d8683bac79200003dc",
+      serviceid: "54cbcbdf9d3a79ca690003f2",
+      containerid: "54b6f6d8683bac79200003eb"
+    },
     {
       name: "Data Store",
       status: "Unknown",
@@ -212,6 +217,55 @@ module.exports.bootstrap = function(cb) {
     }
   ];
   createGroupAndAddServices(authGroup, authServices);
+
+
+  //-----------------
+  //  Agave API
+  //-----------------
+
+  agaveGroup = {
+    name: "Agave API",
+    url: "http://status.agaveapi.co/"
+  };
+
+  agaveServices = [
+    {
+      name: "Developer Website",
+      status: "Unknown",
+      api: "https://api.status.io/1.0/status/53a1e022814a437c5a000781",
+      serviceid: "53a1e022814a437c5a000790",
+      containerid: "5408cecab0024425100002d9"
+    },
+    {
+      name: "iPlant Client Service",
+      status: "Unknown",
+      api: "https://api.status.io/1.0/status/53a1e022814a437c5a000781",
+      serviceid: "53a1e8eacac28f835e00075f",
+      containerid: "5408ced4b0024425100002da"
+    },
+    {
+      name: "App Service",
+      status: "Unknown",
+      api: "https://api.status.io/1.0/status/53a1e022814a437c5a000781",
+      serviceid: "53a1e853cac28f835e000755",
+      containerid: "5408cec1b0024425100002d8"
+    },
+    {
+      name: "File Service",
+      status: "Unknown",
+      api: "https://api.status.io/1.0/status/53a1e022814a437c5a000781",
+      serviceid: "53a1e87bcac28f835e000759",
+      containerid: "5408cec1b0024425100002d8"
+    },
+    {
+      name: "Job Service",
+      status: "Unknown",
+      api: "https://api.status.io/1.0/status/53a1e022814a437c5a000781",
+      serviceid: "53a1e85dcac28f835e000756",
+      containerid: "5408cec1b0024425100002d8"
+    }
+  ];
+  createGroupAndAddServices(agaveGroup, agaveServices);
 
 
 
