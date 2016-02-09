@@ -1,4 +1,7 @@
 # CyVerse Status Site
+
+This is currently running here: <http://status.cyverse.org/>
+
 The intention of this web-app is to determine which services are currently operational.  One can subscribe to downtime notifications for each respective service.  This App is currently hosted via Heroku, as it is completely outside of our infrastructure and can accurately determine operability of our services.
 
 ## This Repository (status-site)
