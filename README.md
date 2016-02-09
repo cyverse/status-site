@@ -11,6 +11,8 @@ In order to update the branding on this particular application, all packages had
 
 Please note that the `master` branch is automatically re-built based on any commits to `master`.  Therefore the `master` branch should be treated as **PRODUCTION**.  If beta testing is required, it is recommended that one make changes to this fork: <https://github.com/mgwall17/status-site> and manually re-deployed, or fork this repository and re-host via a separate Heroku App.  Please note that one should **NOT** configure DNS for that App, as it can only be bound to one application at a time.  To see how to bind DNS, see the section on DNS below. 
 
+## Heroku/AWS Credentials
+The login credentials to iPlant/CyVerse Heroku account can be found in the `secrets` file.  AWS credentials can be found in that same file.  The repository is accessible via GitHub under the iPlantcollaborative and CyVerse Organizations for the respective status-sites.
 
 ## Configure DNS for Heroku
 ### To add DNS CNAME to Heroku App
