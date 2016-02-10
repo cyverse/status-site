@@ -43,7 +43,7 @@
                           <% }else if ( service.status ==="Degraded Performance" || service.status ==="Partial Service Disruption") {%>
                             <p style="color: #FFA837;" class="pull-right component-status"><%= service.status %></p>
 
-                          <%} else if(service.status === "Service Disruption" || service.status === "Security Issue" || service.status == "Full Service Disruption"){%>
+                          <%} else if(service.status === "Service Disruption" || service.status === "Security Issue" || service.status === "Full Service Disruption"){%>
                             <p style="color: #C44031;" class="pull-right component-status"> <%= service.status %></p>
 
                           <%} else{ %>
