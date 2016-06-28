@@ -4,6 +4,10 @@ This is currently running here: <http://status.cyverse.org/>
 
 The intention of this web-app is to determine which services are currently operational.  One can subscribe to downtime notifications for each respective service.  This App is currently hosted via Heroku, as it is completely outside of our infrastructure and can accurately determine operability of our services.
 
+## Maintenance Status
+
+For instructions on how to set the `status.io` status for each product, see instructions [here.](docs/Maintenance.md)
+
 ## This Repository (status-site)
 This App is configured to work directly with Heroku and thus requires specific package definitions and dependencies to "deploy" with Heroku.  One of these dependencies is [Sails](http://sailsjs.org).  All packages are controlled/installed via [NPM] (https://www.npmjs.com/).  The original repository for `status-site` can be found here: <https://github.com/iPlantCollaborativeOpenSource/status-site> and is hosted here: <http://status.iplantcollaborative.org/>
 
