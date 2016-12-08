@@ -9,3 +9,4 @@
 ![aeaef](images/newmaintenance_page.png)
 5. Select services to put into maintenance
 
+Note: a Status.io now offers "automation" for the "start" & "finish" states in a Maintenance. You have the option to turn this on with creating a maintenance. See their [Knowledge Base for more information](http://kb.status.io/planned-maintenance/maintenance-lifecycle/). 
