@@ -6,13 +6,15 @@
 
 ## Creating an Incident
 
-![incident-view](images/incid-view-page.png)
+![incident-page](images/incid-full-view.png)
 
 ![incident-create](images/incid-create-page.png)
 
 ![incident-status-opts](images/incid-create-status-opts.png)
 
 ## Updating an Incident
+
+![incident-view](images/incid-view-page.png)
 
 ![incident-update](images/incid-update-resolve-page.png)
 
