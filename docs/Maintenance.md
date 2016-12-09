@@ -14,7 +14,7 @@
 
 #### Additional options, review
 
-![annotated-create-view](images/maint-create-page-annonate.png)
+![annotated-create-view](images/maint-create-page-annotated.png)
 
 Note: a Status.io now offers "automation" for the "start" & "finish" states in a Maintenance. You have the option to turn this on with creating a maintenance. See their [Knowledge Base for more information](http://kb.status.io/planned-maintenance/maintenance-lifecycle/).
 
